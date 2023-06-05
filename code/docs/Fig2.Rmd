@@ -1,0 +1,59 @@
+---
+title: "Figure 2"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(Racmacs)
+library(r3js)
+library(ggplot2)
+library(plotly)
+```
+
+Inputs {.sidebar}
+-------------------------------------
+<font size="2">
+**Comparison of fold-drops to different variants in post D614G infection and post mRNA-1273 vaccination sera.**
+**A)** Comparison of different estimates of titer fold-drop responses against different variants. Solid points show the estimate for the mean fold drop compared to the titer for D614G, while lines represent the 95% highest density interval for this estimate. The points for D614G to the left of the plot represents the homologous virus against which fold-change for other strains was compared, and are therefore fixed at 1. Dotted lines and outline circles show estimates based on a model that assumes a shared overall pattern of fold-drops but estimates “slope” differences in the rate of reactivity drop-off seen in the 4 serum groups. To aid comparison, points and lines for each of the serum groups have some offset in the x-axis. **B)** Estimates of fold-drop magnitudes for each mRNA-1273 serum group, relative to the fold-drops seen in the D614G convalescent serum group. Lines show the 95% highest density interval for each of the estimates and position on the x axis is proportional to the number of months since 2nd vaccine dose, assuming an average of 6 months for sera in the 2x mRNA-1273 (>3 month) group. **C)** Antibody landscapes showing how estimates of the mean titer for each of the serum groups in panel A vary across antigenic space. **D)** Antibody landscapes as shown in C but fixed to have the same peak titer (2560) against the D614G variant in order to visualize differences in the slope of the titer drop-off based on a fixed magnitude of response.
+</font>
+
+
+Row
+-------------------------------------
+
+### A.
+```{r}
+readRDS("../../figures/main/fig2a.rds")
+```
+
+### B.
+```{r}
+readRDS("../../figures/main/fig2b.rds") + theme(
+  legend.position = "right", 
+  plot.margin = margin(0.5, 0.5, 2, 0.5, unit = "cm")
+)
+```
+
+Row
+-------------------------------------
+
+### C.
+```{r}
+do.call(
+  r3js,
+  readRDS("../../figures/main/lndscps/wt_comparison.rds")
+)
+```
+
+
+### D.
+```{r}
+do.call(
+  r3js,
+  readRDS("../../figures/main/lndscps/wt_slope_comparison.rds")
+)
+```

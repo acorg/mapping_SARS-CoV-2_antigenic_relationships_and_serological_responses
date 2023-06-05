@@ -1,0 +1,44 @@
+---
+title: "Interactive scatterplots"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: scroll
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(Racmacs)
+library(Ractiters)
+library(tidyverse)
+```
+
+Column
+-------------------------------------
+
+<font size="2">
+Click on a variant from the left and right column in order to view a scatterplot of titers between them split by serum group.
+</font>
+
+```{r}
+# Load functions
+source("../../functions/map_longinfo.R")
+source("../../functions/sr_group_labels.R")
+
+# Read in data
+map <- read.acmap("../../data/maps/map_full_with_extras_no_outliers.ace")
+
+adjusted_group_labels <- names(sr_group_labels_no_sera)
+names(adjusted_group_labels) <- sr_group_labels_no_sera
+
+srGroups(map) <- do.call(
+  forcats::fct_recode,
+  c(
+    list(.f = srGroups(map)),
+    as.list(adjusted_group_labels)
+  )
+)
+
+mapdata <- long_map_list_info(list(monte = map))
+RacTiter(mapdata, ag_order = agNames(map), mode = "scatterplot")
+```

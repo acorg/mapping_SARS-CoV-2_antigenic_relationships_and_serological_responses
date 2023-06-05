@@ -1,0 +1,136 @@
+---
+title: "Figure 4"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(Racmacs)
+library(r3js)
+```
+
+```{r}
+plot_lndscp_data <- function(file) {
+  
+  lndscp_data <- readRDS(file)
+  do.call(r3js, lndscp_data)
+  
+}
+```
+
+Legend {.sidebar}
+=====================================
+<font size="2">
+**Fig. 4: Antibody landscapes for each serum group.** Colored surfaces show the GMT antibody landscapes for the different serum groups, light gray surfaces show the landscapes for individual sera. Gray impulses show the height of the GMT for a specific variant, after accounting for individual effects as described in Materials and Methods (which would otherwise bias the GMT for variants not titrated against all sera). The base x-y plane corresponds to the antigenic map shown in Fig. 3. The vertical z-axis in each plot corresponds to the titer on the log2 scale, each two-fold increment is marked, starting from a titer of 20, one unit above the map surface. The gray horizontal plane indicates the height of a titer of 50, as a reference for judging the landscapes against various estimates of neutralizing antibody correlates of protection. The number of sera included for the calculation of the landscapes are A) D614G sera (n=15), B) B.1.1.7 sera (n=14), C) B.1.351 sera (n=19), D) P.1 sera (n=17), E) B.1.617.2 sera (n=29), F) B.1.526+E484K sera (n=8), G) B.1.637 sera (n=3), H) C.37 sera (n=10), I) BA.1 sera (n=4), J) BA.2 sera (n=1), K) 4 weeks post 2x mRNA-1273 sera (n=67), L) >3 months post 2x mRNA-1273 sera (n=16), M) 4 weeks post 3x mRNA-1273 sera (n=26), N) >3 months post 3x mRNA-1273 sera (n=13), O) 4 weeks post 2x mRNA-1273.351 sera (n=9).
+</font>
+
+A
+=====================================
+### D614G sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/D614G.rds")
+```
+
+B
+=====================================
+### B.1.1.7 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/B.1.1.7.rds")
+```
+
+C
+=====================================
+### B.1.351 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/B.1.351.rds")
+```
+
+D
+=====================================
+### P.1 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/P.1.rds")
+```
+
+E
+=====================================
+### B.1.617.2 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/B.1.617.2.rds")
+```
+
+F
+=====================================
+### B.1.526+E484K sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/B.1.526+E484K.rds")
+```
+
+G
+=====================================
+### B.1.637 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/B.1.637.rds")
+```
+
+H
+=====================================
+### C.37 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/C.37.rds")
+```
+
+I
+=====================================
+### BA.1 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/BA.1.rds")
+```
+
+J
+=====================================
+### BA.2 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/BA.2.rds")
+```
+
+K
+=====================================
+### 4 weeks post 2x mRNA-1273 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/2x mRNA-1273.rds")
+```
+
+L
+=====================================
+### >3 months post 2x mRNA-1273 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/3x mRNA-1273 BD01.rds")
+```
+
+M
+=====================================
+### 4 weeks post 3x mRNA-1273 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/3x mRNA-1273 BD29.rds")
+```
+
+N
+=====================================
+### >3 months post 3x mRNA-1273 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/3x mRNA-1273 (6 month).rds")
+```
+
+O
+=====================================
+### 4 weeks post 2x mRNA-1273.351 sera
+```{r}
+plot_lndscp_data("../../figures/main/lndscps/2x mRNA-1273.351.rds")
+```
+
+
+

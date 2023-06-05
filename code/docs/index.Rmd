@@ -1,0 +1,36 @@
+---
+title: "Mapping SARS-CoV-2 antigenic relationships and serological responses"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+---
+
+Follow the links below for interactive figure versions
+<br/><br/>
+
+**Main figures**
+
+[Fig. 2: Comparison of fold-drops to different variants in post D614G infection and post mRNA-1273 vaccination sera.](Fig2.html)
+
+[Fig. 3: Antigenic map of SARS-CoV-2 variants.](Fig3.html)
+
+[Fig. 4: Antibody landscapes for each serum group](Fig4.html) (takes some time to load)
+
+[Fig. 5: Antigenic maps including laboratory-made mutants with substitutions at positions 417, 452, 484, and 501.](Fig5.html)
+
+<br/>
+
+**SOM figures**
+
+[Fig. S13: Effect of the uncertainty in titers and variant reactivity for the antigenic map using “smooth” bootstrap.](FigS13.html)
+
+[Fig. S18: Assessing the robustness of the antigenic map to the inclusion of particular titer measurements.](FigS18.html)
+
+[Fig. S19: Maps showing the uncertainty of the placements of variants and sera.](FigS19.html)
+
+<br/>
+
+**Additional figures**
+
+[Interactive scatterplots of titers between variants, split by serum group.](Scatterplots.html)

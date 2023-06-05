@@ -1,0 +1,47 @@
+---
+title: "Figure 3"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(Racmacs)
+```
+
+Inputs {.sidebar}
+-------------------------------------
+<font size="2">
+**Antigenic map of SARS-CoV-2 variants.**
+**A)** Antigenic map with variant names. 
+**B)** Antigenic map with variant positions in 3D. Variants are shown as circles, sera as squares/cubes. Variants with additional substitutions from a root variant are denoted by smaller circles, in the color of their root variant. The x and y-axes both represent antigenic distance, with one grid square corresponding to a two-fold serum dilution in the neutralization assay. Therefore, two grid squares correspond to a four-fold dilution, three to an eight-fold dilution and so on. The x-y orientation of the map is free, as only the relative distances between variants and sera are relevant. Triangular arrowheads at the edge of the bounding box point in the direction of the sera that would be shown outside of the plot limits. Mouse hover over points to see variant / serum sample ids. Click on the legend symbols in panel A to highlight the corresponding serum points.
+</font>
+
+
+Column
+-------------------------------------
+
+### A.
+```{r}
+map <- read.acmap("../../data/maps/map_ndsubset_no_outliers_slope_adjusted.ace")
+agSize(map) <- agSize(map)*0.6
+srSize(map) <- srSize(map)*0.6
+Racmacs::view(map, show_group_legend = TRUE)
+```
+
+
+Column
+-------------------------------------
+
+### B.
+```{r}
+do.call(
+  RacViewer,
+  c(
+    list(show_group_legend = FALSE),
+    readRDS("../../figures/main/maps/3d_map.rds")
+  )
+)
+```

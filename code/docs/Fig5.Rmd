@@ -1,0 +1,54 @@
+---
+title: "Figure 5"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: scroll
+    fig_height: 5.5
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(Racmacs)
+```
+
+Inputs {.sidebar}
+-------------------------------------
+<font size="2">
+**Antigenic maps including laboratory-made mutants with substitutions at positions 417, 452, 484, and 501.** The same antigenic map as shown in Fig. 2 but additionally showing laboratory-made mutants. **A)** Variants with substitutions N501Y, E484K, E484Q, and L452R+E484K in the background of D614G; D614G+L452R is not shown since it was titrated against only D614G sera, so its position cannot be determined. **B)** Variants with the T/N417K substitution in the background of P.1 and B.1.351 respectively, and K417N in the background of B.1.429 and B.1.617.1. **C)** BA.1 with the substitution A484K. The map in panel C is in 3D to highlight the antigenic differences between BA.1, BA.1+A484K, and BA.4/BA.5. The 2D version of panel C is shown in fig. S27. Lines link the antigenic position of the root virus to that of the laboratory-generated variant.
+</font>
+
+
+Column
+-------------------------------------
+
+### A.
+```{r}
+map <- readRDS("../../figures/main/fig5a-mutant_maps.rds")
+agSize(map) <- agSize(map)*0.7
+srSize(map) <- srSize(map)*0.7
+Racmacs::view(map)
+```
+
+
+Column
+-------------------------------------
+
+### B.
+```{r}
+map <- readRDS("../../figures/main/fig5b-mutant_maps.rds")
+agSize(map) <- agSize(map)*0.7
+srSize(map) <- srSize(map)*0.7
+Racmacs::view(map)
+```
+
+Column
+-------------------------------------
+
+### C.
+```{r}
+do.call(
+  RacViewer,
+  readRDS("../../figures/main/fig5c-mutant_maps.rds")
+)
+```
