@@ -1,0 +1,52 @@
+---
+title: "Figure S14"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(Racmacs)
+library(r3js)
+library(ggplot2)
+library(plotly)
+```
+
+Inputs {.sidebar}
+-------------------------------------
+<font size="2">
+**Effect of the uncertainty in titers and variant reactivity for the antigenic map using “smooth” bootstrap.** 1000 bootstrap repeats were performed with 1000 optimisations per repeat. **A)** Bootstrap with noise added to titers and antigen reactivity. **B)** Bootstrap with noise added to titers. **C)** Bootstrap with noise added to antigen reactivity. The noise added to the titers was normally distributed and had a standard deviation of 0.62, the noise added to the antigen reactivity a standard deviation of 0.4. Each colored region indicates the area in which 68% (one standard deviation) of the positional variation of a serum or variant position is captured. Triangles indicate the positions of variants and sera that are outside the area of the plot. For color correspondence of variants and sera, refer to Fig. 3.
+</font>
+
+
+Column
+-------------------------------------
+
+### A.
+```{r}
+Racmacs::view(
+  readRDS("../../data/generated_data/map_bootstrap_noisy_ags_titers.rds")
+)
+```
+
+Column
+-------------------------------------
+
+### B.
+```{r}
+Racmacs::view(
+  readRDS("../../data/generated_data/map_bootstrap_noisy_titers.rds")
+)
+```
+
+Column
+-------------------------------------
+
+### B.
+```{r}
+Racmacs::view(
+  readRDS("../../data/generated_data/map_bootstrap_noisy_ags.rds")
+)
+```

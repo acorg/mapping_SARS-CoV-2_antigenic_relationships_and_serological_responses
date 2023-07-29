@@ -15,7 +15,7 @@ source("functions/homologous_ags.R")
 source("functions/sr_group_labels.R")
 
 # Read map data
-map <- read.acmap("data/maps/map_full_no_outliers.ace")
+map <- read.acmap("data/maps/map_full_with_extras_no_outliers.ace")
 
 # Get homologous sequences for each serum group
 sr_group_seqs <- tibble(
@@ -234,6 +234,9 @@ titercompdata %>%
     )
   ) -> titercompdata
 
+# Save the titer comparison data
+saveRDS(titercompdata, "data/generated_data/substitution_effect_sizes.rds")
+
 # Set serum group labels
 sr_group_labels <- c(
   "D614G" = "D614G\nsera",
@@ -254,7 +257,12 @@ sr_group_labels <- c(
 )
 
 # Function for doing the actual plotting
-dosubplot <- function(x, add_color_scale = TRUE, plot_widths = c(0.35, 1)) {
+dosubplot <- function(
+    x, 
+    add_color_scale = TRUE, 
+    plot_widths = c(0.35, 1),
+    rotate_strip_text = TRUE
+  ) {
   
   x %>%
     mutate(
@@ -339,7 +347,7 @@ dosubplot <- function(x, add_color_scale = TRUE, plot_widths = c(0.35, 1)) {
     labs(
       x = "Fold difference (Variant B - Variant A)",
       y = "",
-      color = "Amino acid",
+      color = "Amino acid\nin eliciting\nvariant",
       alpha = "NTD equal",
       shape = "NTD equal"
     ) +
@@ -347,7 +355,12 @@ dosubplot <- function(x, add_color_scale = TRUE, plot_widths = c(0.35, 1)) {
     theme(
       strip.text.y = element_text(
         size = 10,
-        angle = 0
+        angle = ifelse(rotate_strip_text, -90, 0),
+        margin = margin(
+          l = 0.2,
+          r = 1,
+          unit = "cm"
+        )
       ),
       axis.text.x = element_text(
         angle = 90,
@@ -358,7 +371,8 @@ dosubplot <- function(x, add_color_scale = TRUE, plot_widths = c(0.35, 1)) {
       legend.key = element_blank(),
       legend.key.width = unit(.3, "cm"),
       legend.title = element_text(
-        size = 10
+        size = 10,
+        lineheight = 1.1
       ), 
       legend.text = element_text(
         size = 8
@@ -470,13 +484,30 @@ dosubplot <- function(x, add_color_scale = TRUE, plot_widths = c(0.35, 1)) {
   
 }
 
-doplot <- function(x, include_figB = TRUE, plotheights = c(1, 1), plot_widths = c(0.35, 1)) {
+doplot <- function(
+    x, 
+    include_figB = TRUE, 
+    plotheights = c(1, 1), 
+    plot_widths = c(0.35, 1),
+    rotate_strip_text = TRUE
+  ) {
   
-  figA <- dosubplot(filter(x, position_diff != "RBD="), plot_widths = plot_widths)
+  figA <- dosubplot(
+    filter(x, position_diff != "RBD="), 
+    plot_widths = plot_widths,
+    rotate_strip_text = rotate_strip_text
+  )
+  
   figA <- figA & theme(plot.tag.position = c(0, 0.995))
   if (!include_figB) return(figA)
   
-  figB <- dosubplot(filter(x, position_diff == "RBD=") %>% mutate(sr_group_aas = "NA"), add_color_scale = FALSE, plot_widths = plot_widths)
+  figB <- dosubplot(
+    filter(x, position_diff == "RBD=") %>% mutate(sr_group_aas = "NA"), 
+    add_color_scale = FALSE, 
+    plot_widths = plot_widths,
+    rotate_strip_text = rotate_strip_text
+  )
+  
   figB <- figB & theme(strip.text.y = element_blank(), legend.position = "none", plot.tag.position = c(0, 0.975))
   fig <- figA / figB + plot_layout(
     heights = plotheights,
@@ -571,6 +602,10 @@ gp <- doplot(titercompdata_subset, plotheights = c(1, 0.26))
 ggsave("figures/main/fig6-ntd_and_immunodominance.pdf", gp, width = 13.2, height = 9.5, units = "in")
 ggsave("figures/main/fig6-ntd_and_immunodominance.png", gp, width = 13.2, height = 9.5, units = "in")
 
-gp_full <- doplot(titercompdata, plot_widths = c(0.15, 1), include_figB = FALSE)
-ggsave("figures/som/figS30-ntd_and_immunodominance_full.pdf", gp_full, width = 24, height = 9.5, units = "in")
-ggsave("figures/som/figS30-ntd_and_immunodominance_full.png", gp_full, width = 24, height = 9.5, units = "in")
+gp_full_infection <- doplot(titercompdata |> filter(!grepl("mRNA", sr_group)), plot_widths = c(0.2, 1), rotate_strip_text = FALSE, include_figB = FALSE)
+ggsave("figures/som/figS32-ntd_and_immunodominance_full.pdf", gp_full_infection, width = 18, height = 9.5, units = "in")
+ggsave("figures/som/figS32-ntd_and_immunodominance_full.png", gp_full_infection, width = 18, height = 9.5, units = "in")
+
+gp_full_vaccination <- doplot(titercompdata |> filter(grepl("mRNA", sr_group)), plot_widths = c(0.52, 1), rotate_strip_text = FALSE, include_figB = FALSE)
+ggsave("figures/som/figS33-ntd_and_immunodominance_full_vaccination.pdf", gp_full_vaccination, width = 11, height = 5, units = "in")
+ggsave("figures/som/figS33-ntd_and_immunodominance_full_vaccination.png", gp_full_vaccination, width = 11, height = 5, units = "in")

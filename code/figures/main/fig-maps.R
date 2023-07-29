@@ -18,20 +18,21 @@ map3d <- read.acmap("data/maps/map_ndsubset_no_outliers_slope_adjusted_3d.ace")
 
 # Plot the 3D map in different angles
 map3d_viewer <- plot_map(
-  map = procrustes_2d_to_3d(map2d, map3d, flip_z_axis = T, excluded_ags = "BA.4/BA.5"),
+  map = procrustes_2d_to_3d(map2d, map3d, flip_z_axis = F, excluded_ags = "BA.4/BA.5"),
   scaling_size = 0.15,
   sr_scaling_size = 0.1,
   alter_opacity = F,
   sera_opacity = 0.2,
   grid.col = NA,
-  rotation = c(-0.9954, 0.0373, 0.2036),
+  # rotation = c(-1.2409, 0.0066, 0.1270),
+  rotation = c(-1.2408, 0.0255, 0.1205),
   translation = c(-0.0799, 0.0153, 0.0057),
   zoom = 1.4,
   datafile = file.path(maps_dir, "3d_map.rds")
 )
 
 map3d_viewer_side <- plot_map(
-  map = procrustes_2d_to_3d(map2d, map3d, flip_z_axis = T, excluded_ags = "BA.4/BA.5"),
+  map = procrustes_2d_to_3d(map2d, map3d, flip_z_axis = F, excluded_ags = "BA.4/BA.5"),
   scaling_size = 0.15,
   sr_scaling_size = 0.1,
   alter_opacity = F,
@@ -43,7 +44,7 @@ map3d_viewer_side <- plot_map(
 )
 
 map3d_viewer_front <- plot_map(
-  map = procrustes_2d_to_3d(map2d, map3d, flip_z_axis = T, excluded_ags = "BA.4/BA.5"),
+  map = procrustes_2d_to_3d(map2d, map3d, flip_z_axis = F, excluded_ags = "BA.4/BA.5"),
   scaling_size = 0.15,
   sr_scaling_size = 0.1,
   alter_opacity = F,

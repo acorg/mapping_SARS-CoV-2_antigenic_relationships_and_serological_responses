@@ -16,6 +16,8 @@ library(r3js)
 plot_lndscp_data <- function(file) {
   
   lndscp_data <- readRDS(file)
+  surface_element <- which(sapply(lndscp_data$data3js$plot, \(x) x$type) == "surface")[1]
+  lndscp_data$data3js$plot[[surface_element]]$properties$opacity <- 0.6
   do.call(r3js, lndscp_data)
   
 }

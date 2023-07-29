@@ -23,11 +23,11 @@ Follow the links below for interactive figure versions
 
 **SOM figures**
 
-[Fig. S13: Effect of the uncertainty in titers and variant reactivity for the antigenic map using “smooth” bootstrap.](FigS13.html)
+[Fig. S14: Effect of the uncertainty in titers and variant reactivity for the antigenic map using “smooth” bootstrap.](FigS14.html)
 
-[Fig. S18: Assessing the robustness of the antigenic map to the inclusion of particular titer measurements.](FigS18.html)
+[Fig. S20: Assessing the robustness of the antigenic map to the inclusion of particular titer measurements.](FigS20.html)
 
-[Fig. S19: Maps showing the uncertainty of the placements of variants and sera.](FigS19.html)
+[Fig. S21: Maps showing the uncertainty of the placements of variants and sera.](FigS21.html)
 
 <br/>
 

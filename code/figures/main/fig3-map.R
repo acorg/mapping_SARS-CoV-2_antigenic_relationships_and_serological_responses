@@ -21,6 +21,12 @@ maplims$xlim[2] <- maplims$xlim[2]
 gp <- ggplot(map2d, xlim = maplims$xlim, ylim = maplims$ylim, fill.alpha = NULL, outline.alpha = NULL)
 ggsave("figures/main/fig3a-main_map.pdf", gp, width = 7.65, height = 6, units = "in")
 
+# Plot the map with serum points hidden
+map2d_nosera <- map2d
+srShown(map2d_nosera) <- FALSE
+gp <- ggplot(map2d_nosera, xlim = maplims$xlim, ylim = maplims$ylim, fill.alpha = NULL, outline.alpha = NULL)
+ggsave("figures/summary/fig0A-main_map.pdf", gp, width = 7.65, height = 6, units = "in")
+
 # Screenshot the 3d map
 unlink("figures/main/fig3b-3d_map.png")
 screenshotWebpage(

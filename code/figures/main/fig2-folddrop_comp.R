@@ -424,6 +424,9 @@ slope_data %>%
     axis.title.x.bottom = element_text(margin = margin(t = 0.25, unit = "cm"))
   ) -> gpB
 
+# Save the B plot
+saveRDS(gpB, file = "code/figures/summary/fig2B.rds")
+
 # Show full folddrop data
 homo_logtiter_table <- matrix(
   unlist(srHomologousLogTiters(map)),
@@ -594,7 +597,7 @@ vac2_plot +
 
 ggsave(
   plot = gp, 
-  filename = "figures/som/figS7-beta_foldrop_comparison.pdf", 
+  filename = "figures/som/figS8-beta_foldrop_comparison.pdf", 
   width = 7, 
   height = 4.4, 
   units = "in"
@@ -602,7 +605,7 @@ ggsave(
 
 ggsave(
   plot = gp, 
-  filename = "figures/som/figS7-beta_foldrop_comparison.png", 
+  filename = "figures/som/figS8-beta_foldrop_comparison.png", 
   width = 7, 
   height = 4.4, 
   units = "in"

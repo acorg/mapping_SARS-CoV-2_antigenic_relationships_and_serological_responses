@@ -3,6 +3,7 @@
 rm(list = ls())
 library(tidyverse)
 library(Racmacs)
+library(shape)
 library(patchwork)
 source("functions/viewer_plotting.R")
 source("functions/screenshot.R")
@@ -310,6 +311,6 @@ ggsave("figures/main/fig5-mutant_maps.pdf", gp, width = 17, height = 5.2, units 
 ggsave("figures/main/fig5-mutant_maps.png", gp, width = 17, height = 5.2, units = "in")
 
 # Save the SOM figure plot
-ggsave("figures/som/figS29-BA1_A484K_2d.pdf", gpC, width = 6, height = 4.8, units = "in")
-ggsave("figures/som/figS29-BA1_A484K_2d.png", gpC, width = 6, height = 4.8, units = "in")
+ggsave("figures/som/figS31-BA1_A484K_2d.pdf", gpC, width = 6, height = 4.8, units = "in")
+ggsave("figures/som/figS31-BA1_A484K_2d.png", gpC, width = 6, height = 4.8, units = "in")
 

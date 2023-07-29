@@ -41,6 +41,7 @@ lndscp_ylim <- range(agCoords(map)[,2])
 angle <- list(
   rotation = c(-1.3934, 0.0020, -0.2476),
   translation = c(0.0459, 0.0303, 0.0745),
+  # zoom = 1.2771
   zoom = 1.4
 )
 
@@ -372,19 +373,19 @@ save3js(
 ## WT comparison
 sr_group_cols <- wt_slope_comparison_cols
 
-data3js <- plot_sr_group_lndscp(
-  sr_group = "D614G",
-  sr_group_color = sr_group_cols["D614G"],
+data3js_3x <- plot_sr_group_lndscp(
+  sr_group = "3x mRNA-1273 BD29",
+  sr_group_color = sr_group_cols["3x mRNA-1273 BD29"],
+  sr_slope = slope_data$estimate[slope_data$sr_group == "3x mRNA-1273 BD29"],
   add_individual = FALSE,
   add_titers = FALSE,
   titer_plane = NA,
   return_data3js = TRUE
 )
 
-data3js_3x <- plot_sr_group_lndscp(
-  sr_group = "3x mRNA-1273",
-  sr_group_color = sr_group_cols["3x mRNA-1273"],
-  sr_slope = slope_data$estimate[slope_data$sr_group == "3x mRNA-1273"],
+data3js_d614g <- plot_sr_group_lndscp(
+  sr_group = "D614G",
+  sr_group_color = sr_group_cols["D614G"],
   return_mean_surface = TRUE
 )
 
@@ -410,7 +411,7 @@ data3js_3x_6month <- plot_sr_group_lndscp(
 )
 
 data3js$plot <- c(
-  data3js$plot, 
+  data3js_d614g$plot, 
   data3js_3x$plot, 
   data3js_3xBD01$plot, 
   data3js_2x$plot,
@@ -452,13 +453,57 @@ htmlwidgets::saveWidget(
   libdir = "lib"
 )
 
+# Save a version without D614G landscape
+data3js$plot <- c(
+  data3js_3x$plot, 
+  data3js_3xBD01$plot, 
+  data3js_2x$plot,
+  data3js_3x_6month$plot
+)
+
+# Save widget data
+saveRDS(
+  object = list(
+    data3js = data3js,
+    rotation = angle$rotation,
+    translation = angle$translation,
+    zoom = angle$zoom,
+    title = "WT slope comparison"
+  ),
+  file = file.path(lndscps_dir, "wt_comparison_no_D614G.rds")
+)
+
+# Create html widget
+widget <- r3js(
+  data3js = data3js,
+  rotation = angle$rotation,
+  translation = angle$translation,
+  zoom = angle$zoom,
+  title = "WT slope comparison"
+)
+
+widget <- htmlwidgets::onRender(
+  widget,
+  jsCode = paste0("function(el, x, data){
+  el.style.outline = 'solid 2px #eeeeee';
+  }")
+)
+
+htmlwidgets::saveWidget(
+  widget = widget,
+  file = file.path(lndscps_dir, "wt_comparison_no_D614G.html"),
+  selfcontained = FALSE,
+  libdir = "lib"
+)
+
 ## WT slope comparison
 sr_group_cols <- wt_slope_comparison_cols
 surface_height <- 8
 
-data3js <- plot_sr_group_lndscp(
-  sr_group = "D614G",
-  sr_group_color = sr_group_cols["D614G"],
+data3js_3x <- plot_sr_group_lndscp(
+  sr_group = "3x mRNA-1273 BD29",
+  sr_group_color = sr_group_cols["3x mRNA-1273 BD29"],
+  sr_slope = slope_data$estimate[slope_data$sr_group == "3x mRNA-1273 BD29"],
   add_individual = FALSE,
   add_titers = FALSE,
   return_data3js = TRUE,
@@ -466,10 +511,9 @@ data3js <- plot_sr_group_lndscp(
   fix_surface = surface_height
 )
 
-data3js_3x <- plot_sr_group_lndscp(
-  sr_group = "3x mRNA-1273",
-  sr_group_color = sr_group_cols["3x mRNA-1273"],
-  sr_slope = slope_data$estimate[slope_data$sr_group == "3x mRNA-1273"],
+data3js_d614g <- plot_sr_group_lndscp(
+  sr_group = "D614G",
+  sr_group_color = sr_group_cols["D614G"],
   return_mean_surface = TRUE,
   fix_surface = surface_height
 )
@@ -498,9 +542,8 @@ data3js_3x_6month <- plot_sr_group_lndscp(
   fix_surface = surface_height
 )
 
-
 data3js$plot <- c(
-  data3js$plot,
+  data3js_d614g$plot,
   data3js_3x$plot,
   data3js_3xBD01$plot,
   data3js_2x$plot,
